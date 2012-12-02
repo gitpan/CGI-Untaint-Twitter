@@ -13,11 +13,11 @@ CGI::Untaint::Twitter - Validate a Twitter ID in a CGI script.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -40,19 +40,29 @@ validate if the given Twitter ID is valid.
 =head2 is_valid
 
 Validates the data.
+Returns a boolean if $self->value is a valid twitter ID.
 
 =cut
 
 sub _untaint_re {
 	# Only allow letters and digits
-	# Remove the leading @ if any
-	return qr/^\@?([a-zA-z0-9]+)$/;
+	# Remove the leading @ if any - leading spaces and so on will be
+	# ignored
+	return qr/\@?([a-zA-z0-9]+)/;
 }
 
 sub is_valid {
 	my $self = shift;
 
 	my $value = $self->value;
+
+	if(!defined($value)) {
+		return 0;
+	}
+
+	# Ignore leading and trailing spaces
+	$value =~ s/\s+$//;
+	$value =~ s/^\s+//;
 
 	my $known_user = 0;
 

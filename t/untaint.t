@@ -13,8 +13,8 @@ if($@) {
 
         use_ok('CGI::Untaint::Twitter');
 
-        is_extractable('nigelhorne', 'devon', 'Twitter');
-        is_extractable('@nigelhorne', 'devon', 'Twitter');
+        is_extractable('nigelhorne', 'nigelhorne', 'Twitter');
+        is_extractable('@nigelhorne', 'nigelhorne', 'Twitter');
         unextractable('&^&', 'Twitter');
 }
 

@@ -1,4 +1,8 @@
 Revision history for CGI-Untaint-Twitter
 
+0.02	Sun Dec  2 18:23:12 EST 2012
+	Fixed t/untaint.t
+	Ignore spaces in the field
+
 0.01	Thu Nov 22 16:36:15 EST 2012
         First draft

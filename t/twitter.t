@@ -1,6 +1,6 @@
 #!perl -wT
 
-use Test::More tests => 11;
+use Test::More tests => 13;
 
 BEGIN {
 	use_ok('CGI::Untaint::Twitter');
@@ -18,9 +18,11 @@ TWITTER: {
 	my $vars = {
 	    twitter1 => 'nigelhorne',
 	    twitter2 => '@nigelhorne',
-	    twitter3 => 'shf£*)',
-	    twitter4 => ' ',
-	    twitter5 => '@',
+	    twitter3 => ' @nigelhorne',
+	    twitter4 => '  @nigelhorne ',
+	    twitter5 => 'shf£*)',
+	    twitter6 => ' ',
+	    twitter7 => '@',
 	};
 
 	my $untainter = new_ok('CGI::Untaint' => [ $vars ]);
@@ -31,12 +33,18 @@ TWITTER: {
 	is($c, 'nigelhorne', '@nigelhorne');
 
 	$c = $untainter->extract(-as_Twitter => 'twitter3');
+	is($c, 'nigelhorne', '@nigelhorne');
+
+	$c = $untainter->extract(-as_Twitter => 'twitter4');
+	is($c, 'nigelhorne', '@nigelhorne');
+
+	$c = $untainter->extract(-as_Twitter => 'twitter5');
 	is($c, undef, 'Junk');
 
 	# and what about empty fields?
-	$c = $untainter->extract(-as_Twitter => 'twitter4');
+	$c = $untainter->extract(-as_Twitter => 'twitter6');
 	is($c, undef, 'Empty');
 
-	$c = $untainter->extract(-as_Twitter => 'twitter4');
+	$c = $untainter->extract(-as_Twitter => 'twitter7');
 	is($c, undef, 'At sign');
 }
