@@ -12,10 +12,10 @@ WriteMakefile(
       : ()),
     PL_FILES            => {},
     PREREQ_PM => {
-        'Test::More' => 0.82,	# Need new_ok()
+        'Test::Most' => 0,
 	'CGI::Untaint' => 0,
 	'Test::NoWarnings' => 0,
-	'Net::Twitter::Lite' => 0,
+	'Net::Twitter::Lite::WithAPIv1_1' => 0,
 	# 'Test::Kwalitee' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },

@@ -1,25 +1,25 @@
---- #YAML:1.0
-name:               CGI-Untaint-Twitter
-version:            0.02
-abstract:           Validate a Twitter ID in a CGI script.
+---
+abstract: 'Validate a Twitter ID in a CGI script'
 author:
-    - Nigel Horne <njh@bandsman.co.uk>
-license:            GPL
-distribution_type:  module
-configure_requires:
-    ExtUtils::MakeMaker:  0
+  - 'Nigel Horne <njh@bandsman.co.uk>'
 build_requires:
-    ExtUtils::MakeMaker:  0
-requires:
-    CGI::Untaint:        0
-    Net::Twitter::Lite:  0
-    Test::More:          0.82
-    Test::NoWarnings:    0
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.57_05
+  ExtUtils::MakeMaker: 0
+configure_requires:
+  ExtUtils::MakeMaker: 0
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.131490'
+license: open_source
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: CGI-Untaint-Twitter
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  CGI::Untaint: 0
+  Net::Twitter::Lite::WithAPIv1_1: 0
+  Test::Most: 0
+  Test::NoWarnings: 0
+version: 0.03

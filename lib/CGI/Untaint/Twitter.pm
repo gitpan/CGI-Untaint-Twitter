@@ -5,19 +5,23 @@ use strict;
 use Carp;
 
 use base 'CGI::Untaint::object';
-use Net::Twitter::Lite;
+use Net::Twitter::Lite::WithAPIv1_1;
 
 =head1 NAME
 
-CGI::Untaint::Twitter - Validate a Twitter ID in a CGI script.
+CGI::Untaint::Twitter - Validate a Twitter ID in a CGI script
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
+our $consumer_key;
+our $consumer_secret;
+our $access_token;
+our $access_token_secret;
 
 =head1 SYNOPSIS
 
@@ -59,6 +63,10 @@ sub is_valid {
 	if(!defined($value)) {
 		return 0;
 	}
+	unless($consumer_key && $consumer_secret && $access_token && $access_token_secret) {
+		carp 'Access tokens are required';
+		return 0;
+	}
 
 	# Ignore leading and trailing spaces
 	$value =~ s/\s+$//;
@@ -67,7 +75,14 @@ sub is_valid {
 	my $known_user = 0;
 
 	eval {
-		if(Net::Twitter::Lite->new(legacy_lists_api => 0)->show_user($value)) {
+		my $nt = Net::Twitter::Lite::WithAPIv1_1->new(
+			consumer_key => $consumer_key,
+			consumer_secret => $consumer_secret,
+			legacy_lists_api => 0,
+			access_token => $access_token,
+			access_token_secret => $access_token_secret
+		);
+		if($nt->show_user({ screen_name => $value })) {
 			$known_user = 1;
 		}
 	};
@@ -78,6 +93,46 @@ sub is_valid {
 		return 1;
 	}
 	return $known_user;
+}
+
+=head2 init
+
+Set various options and override default values.
+
+    use CGI::Info;
+    use CGI::Untaint;
+    use CGI::Untaint::Twitter {
+        access_token => 'xxxxxx', access_token_secret => 'yyyyy',
+	consumer_key => 'xyzzy', consumer_secret => 'plugh',
+    };
+
+=cut
+
+sub _init {
+	my %params = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
+
+	# Safe options - can be called at any time
+	if(defined($params{access_token})) {
+		$access_token = $params{access_token};
+	}
+	if(defined($params{access_token_secret})) {
+		$access_token_secret = $params{access_token_secret};
+	}
+	if(defined($params{consumer_key})) {
+		$consumer_key = $params{consumer_key};
+	}
+	if(defined($params{consumer_secret})) {
+		$consumer_secret = $params{consumer_secret};
+	}
+}
+
+sub import {
+	# my $class = shift;
+	shift;
+
+	return unless @_;
+
+	_init(@_);
 }
 
 =head1 AUTHOR
@@ -134,7 +189,7 @@ L<http://search.cpan.org/dist/CGI-Untaint-Twitter>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2012 Nigel Horne.
+Copyright 2012,2013 Nigel Horne.
 
 This program is released under the following licence: GPL
 

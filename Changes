@@ -1,5 +1,9 @@
 Revision history for CGI-Untaint-Twitter
 
+0.03	Wed 26 Jun 17:52:46 EDT 2013
+	Added t/taint.t
+	Added authentication support, needed by the lateest Twitter API
+
 0.02	Sun Dec  2 18:23:12 EST 2012
 	Fixed t/untaint.t
 	Ignore spaces in the field

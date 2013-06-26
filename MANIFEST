@@ -20,8 +20,10 @@ t/port.t
 t/prereq.t
 t/snippets.t
 t/spelling.t
+t/taint.t
 t/twitter.t
 t/untaint.t
 t/vars.t
 META.yml                                 Module meta-data (added by MakeMaker)
 MYMETA.json
+META.json                                Module JSON meta-data (added by MakeMaker)
