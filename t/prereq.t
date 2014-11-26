@@ -1,4 +1,4 @@
-#!perl -w
+#!perl -wT
 
 use Test::Most;
 

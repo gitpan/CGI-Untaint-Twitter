@@ -20,6 +20,7 @@ t/port.t
 t/prereq.t
 t/snippets.t
 t/spelling.t
+t/strict.t
 t/taint.t
 t/twitter.t
 t/untaint.t

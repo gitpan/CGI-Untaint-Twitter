@@ -13,11 +13,11 @@ CGI::Untaint::Twitter - Validate a Twitter ID in a CGI script
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 our $consumer_key;
 our $consumer_secret;
 our $access_token;
@@ -80,7 +80,8 @@ sub is_valid {
 			consumer_secret => $consumer_secret,
 			legacy_lists_api => 0,
 			access_token => $access_token,
-			access_token_secret => $access_token_secret
+			access_token_secret => $access_token_secret,
+			ssl => 1,
 		);
 		if($nt->show_user({ screen_name => $value })) {
 			$known_user = 1;
@@ -189,7 +190,7 @@ L<http://search.cpan.org/dist/CGI-Untaint-Twitter>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2012,2013 Nigel Horne.
+Copyright 2012-2014 Nigel Horne.
 
 This program is released under the following licence: GPL
 
